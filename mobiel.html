@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Ninja rental — mobiel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* ============================================================
+         MOBILE-FIRST OVERRIDES
+         Single column, centered content, larger tap targets,
+         readable type, comfortable side padding.
+         ============================================================ */
+      :root {
+        --m-pad: 22px;        /* side padding so text never touches edges */
+        --m-tap: 48px;        /* min touch target */
+      }
+      html, body { width: 100%; overflow-x: hidden; }
+      body { background: var(--bg); }
+
+      .m-app {
+        max-width: 520px;     /* keep it phone-shaped even on a wide window */
+        margin: 0 auto;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background: var(--bg);
+        box-shadow: 0 0 80px -40px rgba(168,78,96,0.3);
+      }
+
+      /* ---------- Top bar + hamburger ---------- */
+      .m-bar {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px var(--m-pad);
+        background: rgba(255, 247, 244, 0.92);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(241, 217, 212, 0.7);
+      }
+      .m-brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 20px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+      }
+      .m-brand .mark {
+        width: 34px; height: 34px; border-radius: 50%;
+        background: var(--blush);
+        color: white;
+        display: flex; align-items: center; justify-content: center;
+        font-family: "Instrument Serif", serif; font-style: italic; font-size: 18px;
+      }
+      .m-brand em {
+        font-family: "Instrument Serif", serif; font-style: italic;
+        color: var(--accent-deep); font-weight: 400; margin-left: 2px;
+      }
+      .m-burger {
+        width: var(--m-tap); height: var(--m-tap);
+        border: 1px solid var(--line);
+        background: white;
+        border-radius: 14px;
+        display: flex; align-items: center; justify-content: center;
+        flex-direction: column; gap: 5px;
+        padding: 0;
+      }
+      .m-burger span {
+        display: block; width: 20px; height: 2px; border-radius: 2px;
+        background: var(--ink);
+        transition: transform 240ms ease, opacity 200ms ease;
+      }
+      .m-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+      .m-burger.open span:nth-child(2) { opacity: 0; }
+      .m-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+      /* ---------- Slide-down menu ---------- */
+      .m-menu {
+        position: fixed;
+        inset: 0;
+        z-index: 49;
+        background: var(--bg);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(-8px);
+        transition: opacity 240ms ease, transform 240ms ease;
+        padding: 80px var(--m-pad) 40px;
+        text-align: center;
+      }
+      .m-menu.open { opacity: 1; pointer-events: auto; transform: none; }
+      .m-menu button {
+        width: 100%;
+        max-width: 360px;
+        min-height: var(--m-tap);
+        border: none;
+        background: none;
+        font-family: "Instrument Serif", serif;
+        font-style: italic;
+        font-size: 32px;
+        color: var(--ink);
+        padding: 10px;
+        border-radius: 14px;
+      }
+      .m-menu button.active { color: var(--accent-deep); }
+      .m-menu .m-menu-cta {
+        margin-top: 24px;
+        font-family: "Outfit", sans-serif;
+        font-style: normal;
+        font-size: 16px;
+        font-weight: 500;
+        background: var(--accent-deep);
+        color: white;
+        padding: 14px 28px;
+        border-radius: 999px;
+        width: auto;
+        min-width: 200px;
+      }
+
+      /* ---------- Content area ---------- */
+      .m-content { flex: 1; }
+
+      /* Force every layout block into a centered single column */
+      .m-app .container { padding-left: var(--m-pad) !important; padding-right: var(--m-pad) !important; max-width: 100% !important; }
+      .m-app .hero-grid,
+      .m-app .section-head,
+      .m-app .product-grid,
+      .m-app .contact-grid,
+      .m-app .features,
+      .m-app .steps,
+      .m-app .field-row {
+        grid-template-columns: 1fr !important;
+        gap: 24px !important;
+      }
+      /* HowPage uses an inline 2-col grid for the FAQ block */
+      .m-app .section > div[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+        gap: 32px !important;
+        margin-top: 56px !important;
+      }
+      .m-app .contact-side { margin-top: 24px !important; }
+
+      /* Center the textual content */
+      .m-app .hero,
+      .m-app .subhero,
+      .m-app .section-head,
+      .m-app .feature,
+      .m-app .step,
+      .m-app .quote { text-align: center; }
+      .m-app .section-head { justify-items: center; }
+      .m-app .hero-actions,
+      .m-app .product-cta,
+      .m-app .hero-meta { justify-content: center; }
+      .m-app .hero-meta { gap: 28px !important; flex-wrap: wrap; }
+      .m-app .feature .icon,
+      .m-app .step .num { margin-left: auto; margin-right: auto; }
+      .m-app .includes { text-align: left; display: inline-block; }
+
+      /* Readable type sizes on small screens */
+      .m-app .hero h1 { font-size: clamp(38px, 11vw, 52px) !important; line-height: 1.04; }
+      .m-app .subhero h1 { font-size: clamp(38px, 11vw, 52px) !important; }
+      .m-app .section h2 { font-size: clamp(28px, 8vw, 38px) !important; }
+      .m-app .lead { font-size: 17px !important; }
+      .m-app p { font-size: 16px; }
+
+      /* Comfortable section rhythm */
+      .m-app .section { padding-top: 48px !important; padding-bottom: 48px !important; }
+      .m-app .hero { padding-top: 36px !important; padding-bottom: 12px !important; }
+
+      /* Tap targets: every button / link-button at least 44px tall */
+      .m-app .btn { min-height: var(--m-tap); display: inline-flex; align-items: center; justify-content: center; font-size: 16px; }
+      .m-app .hero-actions .btn,
+      .m-app .product-cta .btn { width: 100%; }
+      .m-app input,
+      .m-app select,
+      .m-app textarea { min-height: var(--m-tap); font-size: 16px; } /* 16px stops iOS zoom-on-focus */
+      .m-app textarea { min-height: 120px; }
+
+      /* Floating hero badges can overflow on tiny screens — calm them */
+      .m-app .float-badge { display: none; }
+      .m-app .floating-fruit { display: none; }
+
+      /* Footer: stacked + centered */
+      .m-app .footer-inner { grid-template-columns: 1fr !important; text-align: center; gap: 28px !important; }
+      .m-app .footer .socials { justify-content: center; }
+      .m-app .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+      .m-app .footer p { margin-left: auto !important; margin-right: auto !important; }
+
+      /* Calendar: keep it inside the column */
+      .m-app .cal-controls { flex-direction: column !important; align-items: stretch !important; gap: 14px !important; }
+      .m-app .cal-machine-toggle { flex-wrap: wrap; justify-content: center; }
+      .m-app .cal-cell { font-size: 13px; }
+      .m-app .cal-legend { flex-wrap: wrap; gap: 12px; font-size: 13px; }
+    </style>
+
+    <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel" src="components.jsx"></script>
+    <script type="text/babel" src="pages.jsx"></script>
+
+    <script type="text/babel">
+      const TABS = [
+        { id: "home",            label: "Home" },
+        { id: "producten",       label: "Producten" },
+        { id: "hoe",             label: "Hoe het werkt" },
+        { id: "contact",         label: "Contact" },
+      ];
+
+      function MobileApp() {
+        const [page, setPage] = React.useState("home");
+        const [menuOpen, setMenuOpen] = React.useState(false);
+
+        const go = (id) => {
+          setPage(id);
+          setMenuOpen(false);
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        };
+
+        // expose for footer links inside shared components
+        React.useEffect(() => {
+          window.__navigate = (id) => go(id);
+          return () => { delete window.__navigate; };
+        }, []);
+
+        // lock body scroll when the menu is open
+        React.useEffect(() => {
+          document.body.style.overflow = menuOpen ? "hidden" : "";
+        }, [menuOpen]);
+
+        let content = null;
+        switch (page) {
+          case "producten":       content = <ProductsPage onNavigate={go} />; break;
+          case "hoe":             content = <HowPage onNavigate={go} />; break;
+          case "contact":         content = <ContactPage />; break;
+          default:                content = <HomePage onNavigate={go} illustrations={false} tweaks={{}} />;
+        }
+
+        return (
+          <div className="m-app">
+            <div className="m-bar">
+              <div className="m-brand" onClick={() => go("home")}>
+                <span className="mark">n</span>
+                <span>Ninja <em>rental</em></span>
+              </div>
+              <button
+                className={`m-burger ${menuOpen ? "open" : ""}`}
+                aria-label="Menu"
+                aria-expanded={menuOpen}
+                onClick={() => setMenuOpen((v) => !v)}
+              >
+                <span></span><span></span><span></span>
+              </button>
+            </div>
+
+            <div className={`m-menu ${menuOpen ? "open" : ""}`}>
+              {TABS.map((t) => (
+                <button
+                  key={t.id}
+                  className={page === t.id ? "active" : ""}
+                  onClick={() => go(t.id)}
+                >
+                  {t.label}
+                </button>
+              ))}
+              <button className="m-menu-cta" onClick={() => go("contact")}>Reserveren</button>
+            </div>
+
+            <div className="m-content shell-inner">{content}</div>
+            <Footer />
+          </div>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<MobileApp />);
+    </script>
+  </body>
+</html>
