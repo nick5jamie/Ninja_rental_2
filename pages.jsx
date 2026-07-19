@@ -466,11 +466,41 @@ const Faq = ({ q, a }) => {
 // ------- Contact -------
 const ContactPage = () => {
   const [submitted, setSubmitted] = React.useState(false);
+  const [sending, setSending] = React.useState(false);
+  const [error, setError] = React.useState(null);
   const [form, setForm] = React.useState({ name: "", email: "", date: "", package: "Ninja Slushi", address: "", message: "" });
 
   const onSubmit = (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    setSending(true);
+    setError(null);
+    fetch("https://formsubmit.co/ajax/ninja.rental.twente@gmail.com", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({
+        _subject: `Aanvraag van ${form.name} — ${form.date}`,
+        Naam: form.name,
+        Email: form.email,
+        Datum: form.date,
+        Adres: form.address,
+        Pakket: form.package,
+        Bericht: form.message,
+        _template: "table",
+      }),
+    })
+      .then((r) => r.json())
+      .then((data) => {
+        setSending(false);
+        if (data.success === "true" || data.success === true) {
+          setSubmitted(true);
+        } else {
+          setError("Er ging iets mis. Probeer het opnieuw of stuur een mail naar ninja.rental.twente@gmail.com");
+        }
+      })
+      .catch(() => {
+        setSending(false);
+        setError("Geen verbinding. Probeer het opnieuw of stuur een mail naar ninja.rental.twente@gmail.com");
+      });
   };
 
   return (
@@ -560,9 +590,10 @@ const ContactPage = () => {
                   <label>Vragen?</label>
                   <textarea value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} placeholder="Heb je nog vragen? Stel ze hier!" />
                 </div>
-                <button type="submit" className="btn btn-accent" style={{ width: "100%", justifyContent: "center" }}>
-                  Stuur aanvraag <Arrow />
+                <button type="submit" disabled={sending} className="btn btn-accent" style={{ width: "100%", justifyContent: "center", opacity: sending ? 0.7 : 1 }}>
+                  {sending ? "Versturen…" : <span>Stuur aanvraag <Arrow /></span>}
                 </button>
+                {error && <p style={{ fontSize: 13, color: "#c8657a", textAlign: "center", margin: "12px 0 0" }}>{error}</p>}
                 <p style={{ fontSize: 12, color: "var(--ink-soft)", textAlign: "center", margin: "16px 0 0" }}>
                   We reageren binnen 24 uur. Geen spam, beloofd.
                 </p>
