@@ -450,15 +450,16 @@ const HowPage = ({ onNavigate }) =>
 const Faq = ({ q, a }) => {
   const [open, setOpen] = React.useState(false);
   return (
-    <div style={{ borderTop: "1px solid var(--line)", padding: "20px 0" }}>
+    <div className="faq-item" style={{ borderTop: "1px solid var(--line)", padding: "20px 0" }}>
       <button
+        className="faq-btn"
         onClick={() => setOpen(!open)}
         style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", border: "none", background: "none", padding: 0, color: "var(--ink)", textAlign: "left" }}>
-        
-        <span style={{ fontSize: 17, fontWeight: 500 }}>{q}</span>
-        <span style={{ fontFamily: "Instrument Serif", fontStyle: "italic", color: "var(--accent-deep)", fontSize: 24, transform: open ? "rotate(45deg)" : "none", transition: "transform 200ms" }}>+</span>
+
+        <span className="faq-q" style={{ fontSize: 17, fontWeight: 500 }}>{q}</span>
+        <span className="faq-icon" style={{ fontFamily: "Instrument Serif", fontStyle: "italic", color: "var(--accent-deep)", fontSize: 24, transform: open ? "rotate(45deg)" : "none", transition: "transform 200ms" }}>+</span>
       </button>
-      {open && <p style={{ color: "var(--ink-soft)", lineHeight: 1.6, margin: "12px 0 0", fontSize: 15 }}>{a}</p>}
+      {open && <p className="faq-a" style={{ color: "var(--ink-soft)", lineHeight: 1.6, margin: "12px 0 0", fontSize: 15 }}>{a}</p>}
     </div>);
 
 };

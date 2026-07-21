@@ -991,7 +991,7 @@ body.no-illu .floating-fruit { display: none !important; }
     margin-top: 48px !important;
   }
 
-  /* Center the FAQ text block */
+  /* Center the FAQ text block heading */
   .section > div[style*="grid-template-columns"] > div:first-child,
   .container > div[style*="grid-template-columns"] > div:first-child {
     text-align: center;
@@ -1000,5 +1000,19 @@ body.no-illu .floating-fruit { display: none !important; }
   .container > div[style*="grid-template-columns"] .eyebrow {
     justify-content: center;
   }
-  .faq-item { text-align: left; }
+
+  /* Center FAQ question + answer */
+  .faq-btn {
+    justify-content: center !important;
+    position: relative !important;
+  }
+  .faq-q {
+    text-align: center !important;
+    flex: 1;
+  }
+  .faq-icon {
+    position: absolute !important;
+    right: 0 !important;
+  }
+  .faq-a { text-align: center !important; }
 }
