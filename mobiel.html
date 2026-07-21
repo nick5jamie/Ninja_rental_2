@@ -152,7 +152,13 @@
         gap: 32px !important;
         margin-top: 56px !important;
       }
-      .m-app .contact-side { margin-top: 24px !important; }
+      .m-app .contact-side { margin-top: 24px !important; text-align: center !important; }
+      .m-app .contact-info-row, .m-app .contact-info-row * { text-align: left !important; }
+      .m-app .section > div[style*="grid-template-columns"] > div:first-child { text-align: center !important; max-width: 480px !important; margin: 0 auto !important; }
+      .m-app .section > div[style*="grid-template-columns"] > div:first-child p { text-align: center !important; }
+      .m-app .section > div[style*="grid-template-columns"] > div:first-child button { gap: 12px !important; position: relative !important; }
+      .m-app .section > div[style*="grid-template-columns"] > div:first-child button span:first-child { flex: none !important; width: calc(100% - 32px) !important; min-width: 0 !important; text-align: center !important; }
+      .m-app .section > div[style*="grid-template-columns"] > div:first-child button span:last-child { position: absolute !important; right: 0 !important; top: 2px !important; }
 
       /* Center the textual content */
       .m-app .hero,
