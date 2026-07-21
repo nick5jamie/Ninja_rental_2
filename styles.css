@@ -982,4 +982,23 @@ body.no-illu .floating-fruit { display: none !important; }
 
 @media (max-width: 480px) {
   .footer-inner { grid-template-columns: 1fr; }
+
+  /* FAQ / inline grids: stack to single column */
+  .section > div[style*="grid-template-columns"],
+  .container > div[style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+    margin-top: 48px !important;
+  }
+
+  /* Center the FAQ text block */
+  .section > div[style*="grid-template-columns"] > div:first-child,
+  .container > div[style*="grid-template-columns"] > div:first-child {
+    text-align: center;
+  }
+  .section > div[style*="grid-template-columns"] .eyebrow,
+  .container > div[style*="grid-template-columns"] .eyebrow {
+    justify-content: center;
+  }
+  .faq-item { text-align: left; }
 }
